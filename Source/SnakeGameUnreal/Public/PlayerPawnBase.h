@@ -32,6 +32,10 @@ protected:
 	UFUNCTION(BlueprintCallable)
 	void OnMove(const float& x, const float& y);
 
+	UFUNCTION(BlueprintCallable)
+	void OnPlayerAteApple();
+
 private:
 	FVector m_currentInputVector = FVector::ZeroVector;
+
 };
