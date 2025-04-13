@@ -8,7 +8,7 @@ AApple::AApple()
 	m_world = GetWorld();
 }
 
-void AApple::Init(TObjectPtr<AAppleSpawner> AppleSpawner)
+void AApple::Init(TObjectPtr<UAppleSpawner> AppleSpawner)
 {
 	m_appleSpawner = AppleSpawner;
 }

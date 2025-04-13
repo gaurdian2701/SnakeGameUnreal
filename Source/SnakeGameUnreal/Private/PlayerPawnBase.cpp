@@ -1,15 +1,13 @@
 ﻿#include "PlayerPawnBase.h"
 
+#include "SnakeGameInstance.h"
+
 
 APlayerPawnBase::APlayerPawnBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	m_snakePawnMovementComponent = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Snake Pawn Movement"));
-	m_snakePawnMovementComponent->RegisterComponent();
-
-	//TODO Have to store a reference to AppleSpawner class in order to listen to the event it invokes.
-	//Searching for it in scene is not good practice, so I should store references to all objects in a TMap.
-	//I could try to do this in GameMode.
+	m_appleSpawner = Cast<USnakeGameInstance>(GetGameInstance())->GetAppleSpawner();
 }
 
 void APlayerPawnBase::BeginPlay()

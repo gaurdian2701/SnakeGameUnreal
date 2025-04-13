@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "EnhancedInputComponent.h"
+#include "UAppleSpawner.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "PlayerPawnBase.generated.h"
 
@@ -26,14 +27,13 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Turn Speed")
 	float m_turnSpeed = 0.0f;
+
+	UPROPERTY()
+	const UAppleSpawner* m_appleSpawner;
 	
 	virtual void BeginPlay() override;
-
-	UFUNCTION(BlueprintCallable)
-	void OnMove(const float& x, const float& y);
-
-	UFUNCTION(BlueprintCallable)
-	void OnPlayerAteApple();
+	UFUNCTION(BlueprintCallable) void OnMove(const float& x, const float& y);
+	UFUNCTION(BlueprintCallable) void OnPlayerAteApple();
 
 private:
 	FVector m_currentInputVector = FVector::ZeroVector;

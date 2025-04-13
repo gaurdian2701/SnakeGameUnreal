@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
-#include "AppleSpawner.h"
+#include "UAppleSpawner.h"
 #include "GameFramework/Actor.h"
 #include "Apple.generated.h"
 
@@ -12,7 +12,7 @@ class SNAKEGAMEUNREAL_API AApple : public AActor
 
 public:
 	AApple();
-	void Init(TObjectPtr<AAppleSpawner> AppleSpawner);
+	void Init(TObjectPtr<UAppleSpawner> AppleSpawner);
 
 protected:
 	virtual void BeginPlay() override;
@@ -21,5 +21,5 @@ protected:
 
 private:
 	TObjectPtr<UWorld> m_world = nullptr;
-	TObjectPtr<AAppleSpawner> m_appleSpawner = nullptr;
+	TObjectPtr<UAppleSpawner> m_appleSpawner = nullptr;
 };
