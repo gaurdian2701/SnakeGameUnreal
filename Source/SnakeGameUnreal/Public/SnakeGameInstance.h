@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
+#include "LevelBuilder.h"
 #include "UAppleSpawner.h"
 #include "Engine/GameInstance.h"
 #include "SnakeGameInstance.generated.h"
@@ -14,6 +15,7 @@ public:
 
 private:
 	TObjectPtr<UAppleSpawner> m_AppleSpawner;
+	TObjectPtr<ULevelBuilder> m_LevelBuilder;
 
 protected:
 	virtual void Init() override;

@@ -1,9 +1,10 @@
 ﻿#include "UAppleSpawner.h"
 
-UAppleSpawner::UAppleSpawner()
+void UAppleSpawner::Init(USnakeGameDataAsset GameData)
 {
 	
 }
+
 
 void UAppleSpawner::HandleAppleEaten(const AApple& AppleBeingEaten)
 {

@@ -1,9 +1,11 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
-#include "UAppleSpawner.h"
 #include "GameFramework/Actor.h"
 #include "Apple.generated.h"
+
+DECLARE_LOG_CATEGORY_EXTERN(APPLE_LOG, Log, All)
+class UAppleSpawner;
 
 UCLASS()
 class SNAKEGAMEUNREAL_API AApple : public AActor

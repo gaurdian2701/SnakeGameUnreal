@@ -1,21 +1,25 @@
 ﻿#include "LevelBuilder.h"
 
-
-ALevelBuilder::ALevelBuilder()
+void ULevelBuilder::Init(TObjectPtr<USnakeGameDataAsset> GameData)
 {
-	PrimaryActorTick.bCanEverTick = false;
 	m_world = GetWorld();
+	m_wallBlueprint = GameData->m_wallBlueprint;
+	m_floorStaticMesh = GameData->m_floorStaticMesh;
+	m_roomLength = GameData->RoomData[0].m_roomLength;
+	m_roomWidth = GameData->RoomData[0].m_roomWidth;
+	m_floorMeshOffset = GameData->m_floorMeshOffset;
+
+	checkf(m_wallBlueprint, TEXT("wall blueprint null"));
+	checkf(m_floorStaticMesh, TEXT("floor mesh null"));
+	checkf(m_world, TEXT("world null"));
 }
 
-void ALevelBuilder::BeginPlay()
+void ULevelBuilder::BeginPlay()
 {
-	Super::BeginPlay();
-	
 	PlaceFloorsAndCeiling();
-	PlaceWalls();
 }
 
-void ALevelBuilder::PlaceFloorsAndCeiling()
+void ULevelBuilder::PlaceFloorsAndCeiling()
 {
 	FVector nextFloorOrCeilingMeshLocation = FVector(m_roomLength / 2 * FLOOR_SCALING_VALUE, m_roomWidth / 2 * FLOOR_SCALING_VALUE, 0);
 	TObjectPtr<UStaticMeshComponent> StaticMeshComponent;
@@ -40,7 +44,7 @@ void ALevelBuilder::PlaceFloorsAndCeiling()
 	m_floor_and_ceiling_tile->SetActorScale3D(floorScale);
 }
 
-void ALevelBuilder::PlaceWalls()
+void ULevelBuilder::PlaceWalls()
 {
 	FVector nextWallLocation = FVector(m_roomLength / 2 * FLOOR_SCALING_VALUE, 0, 0);
 	FVector wallScale = FVector::ZeroVector;
@@ -69,12 +73,5 @@ void ALevelBuilder::PlaceWalls()
 
 	wallActor = m_world->SpawnActor<AActor>(m_wallBlueprint, nextWallLocation, FRotator::ZeroRotator);
 	wallActor->SetActorScale3D(wallScale);
-}
-
-
-
-void ALevelBuilder::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 }
 

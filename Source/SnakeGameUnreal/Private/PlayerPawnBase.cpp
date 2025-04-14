@@ -7,12 +7,12 @@ APlayerPawnBase::APlayerPawnBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	m_snakePawnMovementComponent = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Snake Pawn Movement"));
-	m_appleSpawner = Cast<USnakeGameInstance>(GetGameInstance())->GetAppleSpawner();
 }
 
 void APlayerPawnBase::BeginPlay()
 {
 	Super::BeginPlay();
+	m_appleSpawner = Cast<USnakeGameInstance>(GetGameInstance())->GetAppleSpawner();
 }
 
 void APlayerPawnBase::Tick(float DeltaTime)
@@ -29,7 +29,7 @@ void APlayerPawnBase::OnMove(const float& x, const float& y)
 
 void APlayerPawnBase::OnPlayerAteApple()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, "AppleEaten");
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red, "Player Ate Apple");
 }
 
 

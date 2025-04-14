@@ -1,37 +1,29 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
+#include "SnakeGameDataAsset.h"
 #include "GameFramework/Actor.h"
 #include "Engine/StaticMeshActor.h"
 #include "LevelBuilder.generated.h"
 
 UCLASS()
-class SNAKEGAMEUNREAL_API ALevelBuilder : public AActor
+class SNAKEGAMEUNREAL_API ULevelBuilder : public UObject
 {
 	GENERATED_BODY()
 
 public:
-	ALevelBuilder();
+	ULevelBuilder(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer){}
+	void Init(TObjectPtr<USnakeGameDataAsset> GameData);
+	void BeginPlay();
 
 protected:
-	virtual void BeginPlay() override;
-	virtual void Tick(float DeltaTime) override;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Wall Blueprint")
-	TSubclassOf<AActor> m_wallBlueprint;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Floor Static Mesh")
-	TObjectPtr<UStaticMesh> m_floorStaticMesh;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Floor Length(X)")
-	float m_roomLength;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Floor Width(Y)")
-	float m_roomWidth;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Floor Mesh X Offset")
-	float m_floorMeshOffset = 0.0f;
 	
+	UPROPERTY()
+	TSubclassOf<AActor> m_wallBlueprint = nullptr;
+
+	UPROPERTY()
+	TObjectPtr<UStaticMesh> m_floorStaticMesh = nullptr;
+
 	UPROPERTY()
 	TObjectPtr<AStaticMeshActor> m_floor_and_ceiling_tile = nullptr;
 
@@ -39,16 +31,16 @@ protected:
 	TObjectPtr<UWorld> m_world = nullptr;
 
 private:
-	float m_roomHeight;
-	float m_wallWidth;
+	float m_roomHeight = 0.0f;
+	float m_wallWidth = 0.0f;
+	float m_roomLength = 0.0f;
+	float m_roomWidth = 0.0f;
+	float m_floorMeshOffset = 0.0f;
 	constexpr static float FLOOR_SCALING_VALUE = 100.0f;
-	
+
 	FTimerHandle m_spawnFloorAndCeilingTimerHandle;
 	FTimerHandle m_spawnWallTimerHandle;
-
-	UFUNCTION()
+	
 	void PlaceFloorsAndCeiling();
-
-	UFUNCTION()
 	void PlaceWalls();
 };
