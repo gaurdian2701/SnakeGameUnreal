@@ -2,11 +2,16 @@
 
 void USnakeGameInstance::Init()
 {
-	m_AppleSpawner = NewObject<UAppleSpawner>();
-	m_LevelBuilder = NewObject<ULevelBuilder>();
+	m_AppleSpawner = NewObject<UAppleSpawner>(this);
+	m_LevelBuilder = NewObject<ULevelBuilder>(this);
 }
 
-FORCEINLINE const TObjectPtr<UAppleSpawner> USnakeGameInstance::GetAppleSpawner() const
+FORCEINLINE TObjectPtr<UAppleSpawner> USnakeGameInstance::GetAppleSpawner() const
 {
-	return *m_AppleSpawner;
+	return m_AppleSpawner;
+}
+
+FORCEINLINE TObjectPtr<ULevelBuilder> USnakeGameInstance::GetLevelBuilder() const
+{
+	return m_LevelBuilder;
 }

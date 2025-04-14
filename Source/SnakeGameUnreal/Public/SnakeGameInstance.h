@@ -10,11 +10,14 @@ UCLASS()
 class SNAKEGAMEUNREAL_API USnakeGameInstance : public UGameInstance
 {
 public:
-	const TObjectPtr<UAppleSpawner> GetAppleSpawner() const;
+	TObjectPtr<UAppleSpawner> GetAppleSpawner() const;
+	TObjectPtr<ULevelBuilder> GetLevelBuilder() const;
 	GENERATED_BODY()
 
 private:
+	UPROPERTY()
 	TObjectPtr<UAppleSpawner> m_AppleSpawner;
+	UPROPERTY()
 	TObjectPtr<ULevelBuilder> m_LevelBuilder;
 
 protected:

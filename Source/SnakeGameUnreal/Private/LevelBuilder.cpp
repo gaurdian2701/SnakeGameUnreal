@@ -1,8 +1,8 @@
 ﻿#include "LevelBuilder.h"
 
-void ULevelBuilder::Init(TObjectPtr<USnakeGameDataAsset> GameData)
+void ULevelBuilder::Init(UWorld* World, TObjectPtr<USnakeGameDataAsset> GameData)
 {
-	m_world = GetWorld();
+	m_world = World;
 	m_wallBlueprint = GameData->m_wallBlueprint;
 	m_floorStaticMesh = GameData->m_floorStaticMesh;
 	m_roomLength = GameData->RoomData[0].m_roomLength;
@@ -23,20 +23,22 @@ void ULevelBuilder::PlaceFloorsAndCeiling()
 {
 	FVector nextFloorOrCeilingMeshLocation = FVector(m_roomLength / 2 * FLOOR_SCALING_VALUE, m_roomWidth / 2 * FLOOR_SCALING_VALUE, 0);
 	TObjectPtr<UStaticMeshComponent> StaticMeshComponent;
-	TObjectPtr<AActor> wall = m_world->SpawnActor<AActor>(m_wallBlueprint, FVector::ZeroVector, FRotator::ZeroRotator);
+
+	UStaticMeshComponent* wallStaticMeshComponent =
+		m_wallBlueprint.GetDefaultObject()->FindComponentByClass<UStaticMeshComponent>();
 	
-	m_roomHeight = wall->FindComponentByClass<UStaticMeshComponent>()->GetComponentScale().Z * FLOOR_SCALING_VALUE;
-	m_wallWidth = wall->FindComponentByClass<UStaticMeshComponent>()->GetComponentScale().X * FLOOR_SCALING_VALUE;
-	m_world->DestroyActor(wall);
+	m_roomHeight = wallStaticMeshComponent->GetComponentScale().Z * FLOOR_SCALING_VALUE;
+	m_wallWidth = wallStaticMeshComponent->GetComponentScale().X * FLOOR_SCALING_VALUE;
 	
 	m_floor_and_ceiling_tile = m_world->SpawnActor<AStaticMeshActor>(nextFloorOrCeilingMeshLocation, FRotator::ZeroRotator);
 	FVector floorScale = m_floor_and_ceiling_tile->GetActorScale() * FLOOR_SCALING_VALUE;
+	
 	StaticMeshComponent = m_floor_and_ceiling_tile->GetStaticMeshComponent();
 	StaticMeshComponent->SetStaticMesh(m_floorStaticMesh);
 	m_floor_and_ceiling_tile->SetActorScale3D(floorScale);
-
+	
 	nextFloorOrCeilingMeshLocation.Z = m_roomHeight;
-
+	
 	m_floor_and_ceiling_tile = m_world->SpawnActor<AStaticMeshActor>(nextFloorOrCeilingMeshLocation, FRotator(180, 0, 0));
 	StaticMeshComponent = m_floor_and_ceiling_tile->GetStaticMeshComponent();
 	StaticMeshComponent->CastShadow = false;

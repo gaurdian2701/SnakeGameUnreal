@@ -15,10 +15,12 @@ public:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameData")
 	TObjectPtr<USnakeGameDataAsset> m_SnakeGameData;
+	
 private:
 	UPROPERTY()
-	TObjectPtr<UAppleSpawner> m_appleSpawner;
-	TObjectPtr<ULevelBuilder> m_levelBuilder;
+	UAppleSpawner* m_appleSpawner =  nullptr;
+	UPROPERTY()
+	ULevelBuilder* m_levelBuilder = nullptr;
 	
 protected:
 	virtual void StartPlay() override;

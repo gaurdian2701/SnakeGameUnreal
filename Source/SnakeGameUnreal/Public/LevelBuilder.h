@@ -13,7 +13,7 @@ class SNAKEGAMEUNREAL_API ULevelBuilder : public UObject
 
 public:
 	ULevelBuilder(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer){}
-	void Init(TObjectPtr<USnakeGameDataAsset> GameData);
+	void Init(UWorld* World, TObjectPtr<USnakeGameDataAsset> GameData);
 	void BeginPlay();
 
 protected:
@@ -28,7 +28,7 @@ protected:
 	TObjectPtr<AStaticMeshActor> m_floor_and_ceiling_tile = nullptr;
 
 	UPROPERTY()
-	TObjectPtr<UWorld> m_world = nullptr;
+	UWorld* m_world = nullptr;
 
 private:
 	float m_roomHeight = 0.0f;
