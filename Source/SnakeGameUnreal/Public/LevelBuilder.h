@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
-#include "SnakeGameDataAsset.h"
+#include "SnakeGameInstance.h"
 #include "GameFramework/Actor.h"
 #include "Engine/StaticMeshActor.h"
 #include "LevelBuilder.generated.h"
@@ -13,7 +13,7 @@ class SNAKEGAMEUNREAL_API ULevelBuilder : public UObject
 
 public:
 	ULevelBuilder(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer){}
-	void Init(UWorld* World, TObjectPtr<USnakeGameDataAsset> GameData);
+	void Init(TObjectPtr<USnakeGameInstance> SnakeGameInstance);
 	void BeginPlay();
 
 protected:
@@ -28,7 +28,7 @@ protected:
 	TObjectPtr<AStaticMeshActor> m_floor_and_ceiling_tile = nullptr;
 
 	UPROPERTY()
-	UWorld* m_world = nullptr;
+	TObjectPtr<UWorld> m_world = nullptr;
 
 private:
 	float m_roomHeight = 0.0f;

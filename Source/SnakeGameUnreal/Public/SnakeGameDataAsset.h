@@ -12,14 +12,14 @@ struct FRoomData
 	GENERATED_BODY()
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Floor Length(X)")
-	float m_roomLength;
+	float m_roomLength = 0.0f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Floor Width(Y)")
-	float m_roomWidth;
+	float m_roomWidth = 0.0f;
 };
 
 UCLASS()
-class SNAKEGAMEUNREAL_API USnakeGameDataAsset : public UPrimaryDataAsset
+class SNAKEGAMEUNREAL_API USnakeGameDataAsset : public UDataAsset
 {
 	GENERATED_BODY()
 public:

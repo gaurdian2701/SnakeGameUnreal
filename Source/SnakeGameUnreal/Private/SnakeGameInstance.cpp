@@ -1,17 +1,26 @@
 ﻿#include "SnakeGameInstance.h"
+#include "UAppleSpawner.h"
+#include "LevelBuilder.h"
 
 void USnakeGameInstance::Init()
 {
 	m_AppleSpawner = NewObject<UAppleSpawner>(this);
 	m_LevelBuilder = NewObject<ULevelBuilder>(this);
+	float length = m_snakeGameData->RoomData[0].m_roomLength;
 }
 
-FORCEINLINE TObjectPtr<UAppleSpawner> USnakeGameInstance::GetAppleSpawner() const
+const TObjectPtr<UAppleSpawner> USnakeGameInstance::GetAppleSpawner() const
 {
 	return m_AppleSpawner;
 }
 
-FORCEINLINE TObjectPtr<ULevelBuilder> USnakeGameInstance::GetLevelBuilder() const
+const TObjectPtr<ULevelBuilder> USnakeGameInstance::GetLevelBuilder() const
 {
 	return m_LevelBuilder;
 }
+
+const TObjectPtr<USnakeGameDataAsset> USnakeGameInstance::GetGameData() const
+{
+	return m_snakeGameData;
+}
+

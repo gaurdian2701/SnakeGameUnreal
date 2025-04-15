@@ -1,22 +1,23 @@
 ﻿#include "LevelBuilder.h"
+#include "SnakeGameDataAsset.h"
+#include "SnakeGameInstance.h"
 
-void ULevelBuilder::Init(UWorld* World, TObjectPtr<USnakeGameDataAsset> GameData)
+void ULevelBuilder::Init(TObjectPtr<USnakeGameInstance> SnakeGameInstance)
 {
-	m_world = World;
+	TObjectPtr<USnakeGameDataAsset> GameData = SnakeGameInstance->GetGameData();
+
+	m_world = GetWorld();
 	m_wallBlueprint = GameData->m_wallBlueprint;
 	m_floorStaticMesh = GameData->m_floorStaticMesh;
 	m_roomLength = GameData->RoomData[0].m_roomLength;
 	m_roomWidth = GameData->RoomData[0].m_roomWidth;
 	m_floorMeshOffset = GameData->m_floorMeshOffset;
-
-	checkf(m_wallBlueprint, TEXT("wall blueprint null"));
-	checkf(m_floorStaticMesh, TEXT("floor mesh null"));
-	checkf(m_world, TEXT("world null"));
 }
 
 void ULevelBuilder::BeginPlay()
 {
 	PlaceFloorsAndCeiling();
+	PlaceWalls();
 }
 
 void ULevelBuilder::PlaceFloorsAndCeiling()
@@ -24,11 +25,13 @@ void ULevelBuilder::PlaceFloorsAndCeiling()
 	FVector nextFloorOrCeilingMeshLocation = FVector(m_roomLength / 2 * FLOOR_SCALING_VALUE, m_roomWidth / 2 * FLOOR_SCALING_VALUE, 0);
 	TObjectPtr<UStaticMeshComponent> StaticMeshComponent;
 
-	UStaticMeshComponent* wallStaticMeshComponent =
-		m_wallBlueprint.GetDefaultObject()->FindComponentByClass<UStaticMeshComponent>();
+	TObjectPtr<AActor> wall = GetWorld()->SpawnActor<AActor>(m_wallBlueprint);
+	TObjectPtr<UStaticMeshComponent> wallStaticMeshComponent = wall->GetComponentByClass<UStaticMeshComponent>();
 	
 	m_roomHeight = wallStaticMeshComponent->GetComponentScale().Z * FLOOR_SCALING_VALUE;
 	m_wallWidth = wallStaticMeshComponent->GetComponentScale().X * FLOOR_SCALING_VALUE;
+
+	GetWorld()->DestroyActor(wall);
 	
 	m_floor_and_ceiling_tile = m_world->SpawnActor<AStaticMeshActor>(nextFloorOrCeilingMeshLocation, FRotator::ZeroRotator);
 	FVector floorScale = m_floor_and_ceiling_tile->GetActorScale() * FLOOR_SCALING_VALUE;
