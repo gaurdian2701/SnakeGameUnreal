@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/HUD.h"
-#include "ASnakeHud.generated.h"
+#include "SnakeHud.generated.h"
 
 UCLASS()
-class SNAKEGAMEUNREAL_API AASnakeHud : public AHUD
+class SNAKEGAMEUNREAL_API ASnakeHud : public AHUD
 {
 public:
-	AASnakeHud();
+	ASnakeHud();
 
 protected:
 

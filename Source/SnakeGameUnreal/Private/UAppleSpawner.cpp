@@ -1,14 +1,10 @@
 ﻿#include "UAppleSpawner.h"
+#include "Apple.h"
 
-void UAppleSpawner::Init(USnakeGameDataAsset GameData)
-{
-	
-}
-
-
-void UAppleSpawner::HandleAppleEaten(const AApple& AppleBeingEaten)
+void UAppleSpawner::HandleAppleEaten(AApple* AppleBeingEaten)
 {
 	OnAppleEaten.Broadcast();
+	GetWorld()->DestroyActor(Cast<AActor>(AppleBeingEaten));
 }
 
 

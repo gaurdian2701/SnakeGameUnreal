@@ -19,7 +19,6 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
-	virtual void Tick(float DeltaTime) override;
 
 private:
 	TObjectPtr<UWorld> m_world = nullptr;

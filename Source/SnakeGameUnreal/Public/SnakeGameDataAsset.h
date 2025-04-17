@@ -1,5 +1,4 @@
 ﻿#pragma once
-
 #include "CoreMinimal.h"
 #include "Engine/DataAsset.h"
 #include "SnakeGameDataAsset.generated.h"

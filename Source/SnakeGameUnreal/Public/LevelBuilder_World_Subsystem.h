@@ -1,23 +1,20 @@
 ﻿#pragma once
-
 #include "CoreMinimal.h"
 #include "SnakeGameInstance.h"
 #include "GameFramework/Actor.h"
+#include "Subsystems/WorldSubsystem.h"
 #include "Engine/StaticMeshActor.h"
-#include "LevelBuilder.generated.h"
+#include "LevelBuilder_World_Subsystem.generated.h"
 
 UCLASS()
-class SNAKEGAMEUNREAL_API ULevelBuilder : public UObject
+class SNAKEGAMEUNREAL_API ULevelBuilder_World_Subsystem : public UWorldSubsystem
 {
 	GENERATED_BODY()
 
 public:
-	ULevelBuilder(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer){}
-	void Init(TObjectPtr<USnakeGameInstance> SnakeGameInstance);
 	void BeginPlay();
 
 protected:
-	
 	UPROPERTY()
 	TSubclassOf<AActor> m_wallBlueprint = nullptr;
 
@@ -26,9 +23,6 @@ protected:
 
 	UPROPERTY()
 	TObjectPtr<AStaticMeshActor> m_floor_and_ceiling_tile = nullptr;
-
-	UPROPERTY()
-	TObjectPtr<UWorld> m_world = nullptr;
 
 private:
 	float m_roomHeight = 0.0f;
@@ -40,7 +34,8 @@ private:
 
 	FTimerHandle m_spawnFloorAndCeilingTimerHandle;
 	FTimerHandle m_spawnWallTimerHandle;
-	
+
+	void Init();
 	void PlaceFloorsAndCeiling();
 	void PlaceWalls();
 };

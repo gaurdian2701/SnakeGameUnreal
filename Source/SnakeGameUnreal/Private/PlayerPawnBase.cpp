@@ -1,8 +1,5 @@
 ﻿#include "PlayerPawnBase.h"
 
-#include "SnakeGameInstance.h"
-
-
 APlayerPawnBase::APlayerPawnBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -12,7 +9,6 @@ APlayerPawnBase::APlayerPawnBase()
 void APlayerPawnBase::BeginPlay()
 {
 	Super::BeginPlay();
-	m_appleSpawner = Cast<USnakeGameInstance>(GetGameInstance())->GetAppleSpawner();
 }
 
 void APlayerPawnBase::Tick(float DeltaTime)

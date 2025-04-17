@@ -1,33 +1,26 @@
 ﻿#pragma once
-
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
 #include "SnakeGameInstance.generated.h"
 
 class USnakeGameDataAsset;
-class ULevelBuilder;
+class UPersistentData_Instance_Subsystem;
+class ULevelBuilder_World_Subsystem;
 class UAppleSpawner;
 
 UCLASS(Abstract)
 class SNAKEGAMEUNREAL_API USnakeGameInstance : public UGameInstance
 {
 	GENERATED_BODY()
-
-public:
-	const TObjectPtr<UAppleSpawner> GetAppleSpawner() const;
-	const TObjectPtr<ULevelBuilder> GetLevelBuilder() const;
-	const TObjectPtr<USnakeGameDataAsset> GetGameData() const;
-
-
+	
 protected:
+	virtual void Init() override;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "GameData")
 	TObjectPtr<USnakeGameDataAsset> m_snakeGameData;
 
-	virtual void Init() override;
-
-private:
 	UPROPERTY()
-	TObjectPtr<UAppleSpawner> m_AppleSpawner;
+	TObjectPtr<UPersistentData_Instance_Subsystem> m_persistentDataSubsystem;
 	UPROPERTY()
-	TObjectPtr<ULevelBuilder> m_LevelBuilder;
+	TObjectPtr<ULevelBuilder_World_Subsystem> m_levelBuilderSubsystem;
 };

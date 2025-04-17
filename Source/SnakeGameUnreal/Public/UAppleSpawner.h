@@ -14,8 +14,7 @@ class SNAKEGAMEUNREAL_API UAppleSpawner : public UObject
 
 public:
 	UAppleSpawner(const FObjectInitializer &ObjectInitializer) : Super(ObjectInitializer) {}
-	void Init(UWorld *World);
-	void HandleAppleEaten(const AApple& AppleBeingEaten);
+	void HandleAppleEaten(AApple* AppleBeingEaten);
 	
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAppleEaten);
 	UPROPERTY(BlueprintAssignable)

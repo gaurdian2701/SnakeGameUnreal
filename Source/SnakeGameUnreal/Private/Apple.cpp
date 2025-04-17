@@ -6,7 +6,7 @@ DEFINE_LOG_CATEGORY(APPLE_LOG);
 
 AApple::AApple()
 {
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = false;
 	m_world = GetWorld();
 }
 
@@ -27,13 +27,7 @@ void AApple::NotifyActorBeginOverlap(AActor* OtherActor)
 	GEngine->AddOnScreenDebugMessage(0, 3, FColor::Red, "OVERLASP");
 	if (Cast<APlayerPawnBase>(OtherActor))
 	{
-		m_appleSpawner->HandleAppleEaten(*this);
-		this->Destroy();
+		m_appleSpawner->HandleAppleEaten(this);
 	}
-}
-
-void AApple::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
 }
 
