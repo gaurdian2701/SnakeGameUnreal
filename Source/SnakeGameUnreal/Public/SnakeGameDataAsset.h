@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
+#include "SnakeSegmentBase.h"
 #include "Engine/DataAsset.h"
 #include "SnakeGameDataAsset.generated.h"
 
@@ -10,11 +11,11 @@ struct FRoomData
 {
 	GENERATED_BODY()
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Floor Length(X)")
-	float m_roomLength = 0.0f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Room Length(X)")
+	int m_roomLength = 0;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Floor Width(Y)")
-	float m_roomWidth = 0.0f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Room Width(Y)")
+	int m_roomWidth = 0;
 };
 
 UCLASS()
@@ -22,18 +23,21 @@ class SNAKEGAMEUNREAL_API USnakeGameDataAsset : public UDataAsset
 {
 	GENERATED_BODY()
 public:
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Snake Body Blueprint")
+	TSubclassOf<ASnakeSegmentBase> m_SnakeSegment;
+	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Apple Blueprint")
-	TSubclassOf<AApple> AppleBlueprint;
+	TSubclassOf<AApple> m_AppleBlueprint;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Wall Blueprint")
-	TSubclassOf<AActor> m_wallBlueprint;
+	TSubclassOf<AActor> m_WallBlueprint;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Floor Static Mesh")
-	TObjectPtr<UStaticMesh> m_floorStaticMesh;
+	TObjectPtr<UStaticMesh> m_FloorStaticMesh;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Floor Mesh Offset")
-	float m_floorMeshOffset = 0.0f;
+	float m_FloorMeshOffset = 0.0f;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Level Room Data")
-	TArray<FRoomData> RoomData;
+	TArray<FRoomData> m_RoomData;
 };

@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
 #include "LevelBuilder_World_Subsystem.h"
+#include "Spawning_World_Subsystem.h"
 #include "UAppleSpawner.h"
 #include "GameFramework/GameMode.h"
 #include "SnakePlayingGameMode.generated.h"
@@ -12,9 +13,14 @@ class SNAKEGAMEUNREAL_API ASnakePlayingGameMode : public AGameMode
 	
 private:
 	UPROPERTY()
-	UAppleSpawner* m_appleSpawner =  nullptr;
+	TObjectPtr<UAppleSpawner> m_appleSpawner =  nullptr;
 	UPROPERTY()
-	ULevelBuilder_World_Subsystem* m_levelBuilder = nullptr;
+	TObjectPtr<ULevelBuilder_World_Subsystem> m_levelBuilder = nullptr;
+	UPROPERTY()
+	TObjectPtr<USpawning_World_Subsystem> m_spawningSubsystem = nullptr;
+
+	void GetSubsystems();
+	void StartSubsystems();
 	
 protected:
 	virtual void BeginPlay() override;

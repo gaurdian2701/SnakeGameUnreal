@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
 #include "EnhancedInputComponent.h"
+#include "SnakeSegmentBase.h"
 #include "UAppleSpawner.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "PlayerPawnBase.generated.h"
@@ -28,13 +29,24 @@ protected:
 	float m_turnSpeed = 0.0f;
 
 	UPROPERTY()
-	const UAppleSpawner* m_appleSpawner;
+	TObjectPtr<UAppleSpawner> m_appleSpawner = nullptr;
+
+	UPROPERTY()
+	TSubclassOf<ASnakeSegmentBase> m_snakeSegmentDefaultBlueprint = nullptr;
+	
+	UPROPERTY()
+	TArray<TObjectPtr<AActor>> m_snakeSegments;
 	
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 	UFUNCTION(BlueprintCallable) void OnMove(const float& x, const float& y);
 	UFUNCTION(BlueprintCallable) void OnPlayerAteApple();
 
 private:
 	FVector m_currentInputVector = FVector::ZeroVector;
 
+	void InitializeProperties();
+	void SubscribeToEvents();
+	void UnsubscribeFromEvents();
+	void AddNewSnakeSegment();
 };

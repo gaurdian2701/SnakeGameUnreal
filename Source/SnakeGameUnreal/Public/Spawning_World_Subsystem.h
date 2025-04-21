@@ -14,4 +14,8 @@ protected:
 	
 	UPROPERTY()
 	TObjectPtr<UAppleSpawner> m_appleSpawner = nullptr;
+
+public:
+	void BeginPlay();
+	TObjectPtr<UAppleSpawner> GetAppleSpawner();
 };

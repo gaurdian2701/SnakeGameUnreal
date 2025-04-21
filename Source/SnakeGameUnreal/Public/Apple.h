@@ -14,13 +14,11 @@ class SNAKEGAMEUNREAL_API AApple : public AActor
 
 public:
 	AApple();
-	void Init(TObjectPtr<UAppleSpawner> AppleSpawner);
 
 protected:
 	virtual void BeginPlay() override;
 	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
 
 private:
-	TObjectPtr<UWorld> m_world = nullptr;
 	TObjectPtr<UAppleSpawner> m_appleSpawner = nullptr;
 };
