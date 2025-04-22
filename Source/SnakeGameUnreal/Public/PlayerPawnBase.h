@@ -1,7 +1,8 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
 #include "EnhancedInputComponent.h"
-#include "SnakeSegmentBase.h"
+#include "ABodySegmentBase.h"
+#include "BodyGrowingComponent.h"
 #include "UAppleSpawner.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "PlayerPawnBase.generated.h"
@@ -19,6 +20,9 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UFloatingPawnMovement> m_snakePawnMovementComponent = nullptr;
 
+	UPROPERTY()
+	TObjectPtr<UBodyGrowingComponent> m_bodyGrowingComponent = nullptr;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Move Action")
 	TObjectPtr<UInputAction> m_moveAction = nullptr;
 
@@ -32,7 +36,7 @@ protected:
 	TObjectPtr<UAppleSpawner> m_appleSpawner = nullptr;
 
 	UPROPERTY()
-	TSubclassOf<ASnakeSegmentBase> m_snakeSegmentDefaultBlueprint = nullptr;
+	TSubclassOf<ABodySegmentBase> m_snakeSegmentDefaultBlueprint = nullptr;
 	
 	UPROPERTY()
 	TArray<TObjectPtr<AActor>> m_snakeSegments;

@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
-#include "SnakeSegmentBase.h"
+#include "ABodySegmentBase.h"
 #include "Engine/DataAsset.h"
 #include "SnakeGameDataAsset.generated.h"
 
@@ -24,7 +24,7 @@ class SNAKEGAMEUNREAL_API USnakeGameDataAsset : public UDataAsset
 	GENERATED_BODY()
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Snake Body Blueprint")
-	TSubclassOf<ASnakeSegmentBase> m_SnakeSegment;
+	TSubclassOf<ABodySegmentBase> m_SnakeSegment;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Apple Blueprint")
 	TSubclassOf<AApple> m_AppleBlueprint;

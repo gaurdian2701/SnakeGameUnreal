@@ -1,7 +1,5 @@
 ﻿#include "PlayerPawnBase.h"
-
 #include "PersistentData_Instance_Subsystem.h"
-#include "SnakeSegmentBase.h"
 #include "Spawning_World_Subsystem.h"
 
 APlayerPawnBase::APlayerPawnBase()
@@ -28,6 +26,7 @@ void APlayerPawnBase::InitializeProperties()
 	m_appleSpawner = GetWorld()->GetSubsystem<USpawning_World_Subsystem>()->GetAppleSpawner();
 	m_snakeSegmentDefaultBlueprint = GetGameInstance()->GetSubsystem<UPersistentData_Instance_Subsystem>()
 	->GetGameData()->m_SnakeSegment;
+	m_bodyGrowingComponent = GetComponentByClass<UBodyGrowingComponent>();
 }
 
 void APlayerPawnBase::SubscribeToEvents()
@@ -59,16 +58,7 @@ void APlayerPawnBase::OnPlayerAteApple()
 
 void APlayerPawnBase::AddNewSnakeSegment()
 {
-	TObjectPtr<ASnakeSegmentBase> m_snakeSegment = GetWorld()->
-		SpawnActor<ASnakeSegmentBase>(m_snakeSegmentDefaultBlueprint, GetActorLocation(), FRotator::ZeroRotator,
-			FActorSpawnParameters());
-
-	if (m_snakeSegments.Num() < 1)
-		m_snakeSegment->SetTargetActor(Cast<AActor>(this));
-	else
-		m_snakeSegment->SetTargetActor(m_snakeSegments.Last().Get());
-	
-	m_snakeSegments.Add(m_snakeSegment);
+	m_bodyGrowingComponent->AddNewBodySegment();
 }
 
 

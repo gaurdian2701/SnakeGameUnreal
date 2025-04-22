@@ -2,15 +2,15 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "SnakeSegmentBase.generated.h"
+#include "ABodySegmentBase.generated.h"
 
 UCLASS()
-class SNAKEGAMEUNREAL_API ASnakeSegmentBase : public AActor
+class SNAKEGAMEUNREAL_API ABodySegmentBase : public AActor
 {
 	GENERATED_BODY()
 
 public:
-	ASnakeSegmentBase();
+	ABodySegmentBase();
 	virtual void Tick(float DeltaTime) override;
 	void SetTargetActor(TObjectPtr<AActor> TargetActor);
 
