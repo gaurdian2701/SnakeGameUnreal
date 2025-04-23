@@ -20,7 +20,7 @@ protected:
 	UPROPERTY()
 	TObjectPtr<UFloatingPawnMovement> m_snakePawnMovementComponent = nullptr;
 
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TObjectPtr<UBodyGrowingComponent> m_bodyGrowingComponent = nullptr;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Move Action")

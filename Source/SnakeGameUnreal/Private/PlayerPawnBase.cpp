@@ -6,6 +6,7 @@ APlayerPawnBase::APlayerPawnBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
 	m_snakePawnMovementComponent = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Snake Pawn Movement"));
+	m_bodyGrowingComponent = CreateDefaultSubobject<UBodyGrowingComponent>(TEXT("Snake Growing Component"));
 }
 
 void APlayerPawnBase::BeginPlay()
@@ -26,7 +27,6 @@ void APlayerPawnBase::InitializeProperties()
 	m_appleSpawner = GetWorld()->GetSubsystem<USpawning_World_Subsystem>()->GetAppleSpawner();
 	m_snakeSegmentDefaultBlueprint = GetGameInstance()->GetSubsystem<UPersistentData_Instance_Subsystem>()
 	->GetGameData()->m_SnakeSegment;
-	m_bodyGrowingComponent = GetComponentByClass<UBodyGrowingComponent>();
 }
 
 void APlayerPawnBase::SubscribeToEvents()
