@@ -21,7 +21,7 @@ void AApple::NotifyActorBeginOverlap(AActor* OtherActor)
 	Super::NotifyActorBeginOverlap(OtherActor);
 	if (Cast<APlayerPawnBase>(OtherActor))
 	{
-		m_appleSpawner->HandleAppleEaten(this);
+		m_appleSpawner->HandleAppleEaten(this, Cast<APlayerPawnBase>(OtherActor));
 	}
 }
 

@@ -7,6 +7,7 @@
 #include "UAppleSpawner.generated.h"
 
 class AApple;
+class APlayerPawnBase;
 
 UCLASS()
 class SNAKEGAMEUNREAL_API UAppleSpawner : public UObject
@@ -16,9 +17,9 @@ class SNAKEGAMEUNREAL_API UAppleSpawner : public UObject
 public:
 	UAppleSpawner(const FObjectInitializer &ObjectInitializer) : Super(ObjectInitializer) {}
 	void Init(TObjectPtr<USnakeGameDataAsset> GameDataAsset);
-	void HandleAppleEaten(AApple* AppleBeingEaten);
+	void HandleAppleEaten(AApple* AppleBeingEaten, APlayerPawnBase* PlayerWhoAteApple);
 	
-	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAppleEaten);
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAppleEaten, APlayerPawnBase*, PlayerPawn);
 	UPROPERTY(BlueprintAssignable)
 	FOnAppleEaten OnAppleEaten;
 

@@ -47,13 +47,22 @@ void APlayerPawnBase::Tick(float DeltaTime)
 
 void APlayerPawnBase::OnMove(const float& x, const float& y)
 {
-	AddControllerPitchInput(-y * m_turnSpeed);
-	AddControllerYawInput(x * m_turnSpeed);
+	APlayerController* currentController = Cast<APlayerController>(GetController());
+	FRotator rotation = currentController->GetControlRotation();
+	rotation.Yaw += x * m_turnSpeed;
+	rotation.Pitch += y * m_turnSpeed;
+	currentController->SetControlRotation(rotation);
+
+	FString controllerName = GetController()->GetActorNameOrLabel();
+	FString msg = FString::Printf(TEXT("%f, %f"), x, y);
+	GEngine->AddOnScreenDebugMessage(0, 5, FColor::Red, msg);
+	GEngine->AddOnScreenDebugMessage(1, 5, FColor::Red, controllerName);
 }
 
-void APlayerPawnBase::OnPlayerAteApple()
+void APlayerPawnBase::OnPlayerAteApple(APlayerPawnBase* PlayerWhoAteApple)
 {
-	AddNewSnakeSegment();
+	if (this == PlayerWhoAteApple)
+		AddNewSnakeSegment();
 }
 
 void APlayerPawnBase::AddNewSnakeSegment()

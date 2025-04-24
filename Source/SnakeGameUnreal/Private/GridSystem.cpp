@@ -32,7 +32,7 @@ TObjectPtr<AActor> UGridSystem::SpawnActorAtIndex(TSubclassOf<AActor> Actor, int
 		return nullptr;
 	}
 
-	UE_LOGFMT(LogTemp, Warning, "OBJECT SPAWNED AT {0},{1}", XIndex, YIndex);
+	// UE_LOGFMT(LogTemp, Warning, "OBJECT SPAWNED AT {0},{1}", XIndex, YIndex);
 
 	TObjectPtr<AActor> spawnedActor = GetWorld()->SpawnActor<AActor>(Actor, FVector(XIndex * m_levelBuilder->BUILDER_SCALING_VALUE,
 		YIndex * m_levelBuilder->BUILDER_SCALING_VALUE,height), FRotator::ZeroRotator, FActorSpawnParameters());
@@ -55,7 +55,7 @@ void UGridSystem::DestroyActorFromPosition(float XPosition, float YPosition)
 	TObjectPtr<AActor> actorInScene = m_spawnedActorsInScene[hash];
 	m_spawnedActorsInScene.Remove(hash);
 	GetWorld()->DestroyActor(actorInScene);
-	UE_LOGFMT(LogTemp, Warning, "OBJECT DESPAWNED AT {0},{1}", XIndex, YIndex);
+	// UE_LOGFMT(LogTemp, Warning, "OBJECT DESPAWNED AT {0},{1}", XIndex, YIndex);
 }
 
 int32 UGridSystem::GetHash(int32 XIndex, int32 YIndex)

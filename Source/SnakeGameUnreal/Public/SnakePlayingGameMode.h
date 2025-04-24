@@ -6,6 +6,7 @@
 #include "GameFramework/GameMode.h"
 #include "SnakePlayingGameMode.generated.h"
 
+
 UCLASS(Abstract)
 class SNAKEGAMEUNREAL_API ASnakePlayingGameMode : public AGameMode
 {
@@ -21,6 +22,7 @@ private:
 
 	void GetSubsystems();
 	void StartSubsystems();
+	void CreateNewPlayer();
 	
 protected:
 	virtual void BeginPlay() override;

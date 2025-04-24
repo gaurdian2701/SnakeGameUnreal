@@ -10,9 +10,9 @@ void UAppleSpawner::Init(TObjectPtr<USnakeGameDataAsset> GameDataAsset)
 	SpawnNewApple();
 }
 
-void UAppleSpawner::HandleAppleEaten(AApple* AppleBeingEaten)
+void UAppleSpawner::HandleAppleEaten(AApple* AppleBeingEaten, APlayerPawnBase* PlayerWhoAteApple)
 {
-	OnAppleEaten.Broadcast();
+	OnAppleEaten.Broadcast(PlayerWhoAteApple);
 	m_gridSystem->DestroyActorFromPosition(AppleBeingEaten->GetActorLocation().X, AppleBeingEaten->GetActorLocation().Y);
 	SpawnNewApple();
 }
