@@ -43,8 +43,12 @@ protected:
 	
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
-	UFUNCTION(BlueprintCallable) void OnMove(const float& x, const float& y);
-	UFUNCTION(BlueprintCallable) void OnPlayerAteApple(APlayerPawnBase* playerWhoAteApple);
+	
+	UFUNCTION(BlueprintCallable)
+	void OnMove(const float& x, const float& y);
+	
+	UFUNCTION(BlueprintCallable)
+	void OnPlayerAteApple(APlayerPawnBase* playerWhoAteApple);
 
 private:
 	FVector m_currentInputVector = FVector::ZeroVector;
