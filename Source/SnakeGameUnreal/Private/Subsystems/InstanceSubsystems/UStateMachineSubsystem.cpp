@@ -15,9 +15,9 @@ void UStateMachineSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 void UStateMachineSubsystem::AddStates_Implementation()
 {
 	IStateMachine::AddStates_Implementation();
-	m_StateObjects.Add(UMenuState::StaticClass(), NewObject<UMenuState>(this));
-	m_StateObjects.Add(UPlayingState::StaticClass(), NewObject<UPlayingState>(this));
-	m_StateObjects.Add(UEndState::StaticClass(), NewObject<UEndState>(this));
+	m_StateObjects.Add(UMenuState::StaticClass(), NewObject<UStateBase>(this, UMenuState::StaticClass()));
+	m_StateObjects.Add(UPlayingState::StaticClass(), NewObject<UStateBase>(this, UPlayingState::StaticClass()));
+	m_StateObjects.Add(UEndState::StaticClass(), NewObject<UEndState>(this, UEndState::StaticClass()));
 }
 
 void UStateMachineSubsystem::SwitchState_Implementation(const UClass* NewState)

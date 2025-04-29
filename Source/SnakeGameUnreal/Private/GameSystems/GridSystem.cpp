@@ -1,4 +1,5 @@
 ﻿#include "GameSystems/GridSystem.h"
+#include "Core/SnakePlayingGameModeBase.h"
 #include "Subsystems/WorldSubsystems/LevelBuilder_World_Subsystem.h"
 #include "Logging/StructuredLog.h"
 
@@ -8,6 +9,7 @@ void UGridSystem::InitGrid(int32 Rows, int32 Columns)
 		m_gridTiles.Empty();
 
 	m_levelBuilder = GetWorld()->GetSubsystem<ULevelBuilder_World_Subsystem>();
+	m_miscFunctions = Cast<ASnakePlayingGameModeBase>(GetWorld()->GetAuthGameMode())->GetMiscFunctions();
 	m_gridRows = Rows;
 	m_gridColumns = Columns;
 	m_gridTiles.SetNum(m_gridRows * m_gridColumns);
@@ -32,7 +34,6 @@ TObjectPtr<AActor> UGridSystem::SpawnActorAtIndex(TSubclassOf<AActor> Actor, int
 		return nullptr;
 	}
 
-	// UE_LOGFMT(LogTemp, Warning, "OBJECT SPAWNED AT {0},{1}", XIndex, YIndex);
 
 	TObjectPtr<AActor> spawnedActor = GetWorld()->SpawnActor<AActor>(Actor, FVector(XIndex * m_levelBuilder->BUILDER_SCALING_VALUE,
 		YIndex * m_levelBuilder->BUILDER_SCALING_VALUE,height), FRotator::ZeroRotator, FActorSpawnParameters());
@@ -40,7 +41,7 @@ TObjectPtr<AActor> UGridSystem::SpawnActorAtIndex(TSubclassOf<AActor> Actor, int
 	gridTile->bOccupied = true;
 	gridTile = nullptr;
 
-	m_spawnedActorsInScene.Add(GetHash(XIndex, YIndex), spawnedActor);
+	m_spawnedActorsInScene.Add(m_miscFunctions->GetHash<int32>(XIndex, YIndex), spawnedActor);
 	return spawnedActor;
 }
 
@@ -50,19 +51,13 @@ void UGridSystem::DestroyActorFromPosition(float XPosition, float YPosition)
 	int32 YIndex = YPosition/m_levelBuilder->BUILDER_SCALING_VALUE;
 	m_gridTiles[XIndex * m_gridRows + YIndex].bOccupied = false;
 
-	int32 hash = GetHash(XIndex, YIndex);
+	int32 hash = m_miscFunctions->GetHash<int32>(XIndex, YIndex);
 	
 	TObjectPtr<AActor> actorInScene = m_spawnedActorsInScene[hash];
+
 	m_spawnedActorsInScene.Remove(hash);
 	GetWorld()->DestroyActor(actorInScene);
-	// UE_LOGFMT(LogTemp, Warning, "OBJECT DESPAWNED AT {0},{1}", XIndex, YIndex);
 }
-
-int32 UGridSystem::GetHash(int32 XIndex, int32 YIndex)
-{
-	return 32768 * XIndex + YIndex;
-}
-
 
 void UGridSystem::PlaceBoundaries(TSubclassOf<AActor>& Actor)
 {

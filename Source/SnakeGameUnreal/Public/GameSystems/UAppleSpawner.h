@@ -4,6 +4,7 @@
 #include "DataAssets/SnakeGameDataAsset.h"
 #include "GameFramework/Actor.h"
 #include "GridSystem.h"
+#include "StateInfo/SnakeGameState.h"
 #include "UAppleSpawner.generated.h"
 
 class AApple;
@@ -18,18 +19,19 @@ public:
 	UAppleSpawner(const FObjectInitializer &ObjectInitializer) : Super(ObjectInitializer) {}
 	void Init(TObjectPtr<USnakeGameDataAsset> GameDataAsset);
 	void HandleAppleEaten(AApple* AppleBeingEaten, APlayerPawnBase* PlayerWhoAteApple);
-	
-	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAppleEaten, APlayerPawnBase*, PlayerPawn);
-	UPROPERTY(BlueprintAssignable)
-	FOnAppleEaten OnAppleEaten;
+	FVector GetNextAppleLocation();
 
 private:
 	int32 m_appleSpawningHeight = 0;
-	
+
+	UPROPERTY()
+	TArray<TObjectPtr<AActor>> m_applesSpawned;
 	UPROPERTY()
 	TSubclassOf<AActor> m_appleBlueprint;
 	UPROPERTY()
 	TObjectPtr<UGridSystem> m_gridSystem;
+	UPROPERTY()
+	TObjectPtr<ASnakeGameState> m_snakeGameState;
 	
 	void SpawnNewApple();
 };

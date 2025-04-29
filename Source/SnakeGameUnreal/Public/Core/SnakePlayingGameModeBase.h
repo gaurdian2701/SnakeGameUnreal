@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
-#include "Pawns/PlayerPawnBase.h"
+#include "Misc/MiscellaneousFunctions.h"
 #include "Subsystems/WorldSubsystems/LevelBuilder_World_Subsystem.h"
 #include "Subsystems/WorldSubsystems/Spawning_World_Subsystem.h"
 #include "GameFramework/GameMode.h"
@@ -11,8 +11,12 @@ UCLASS(Abstract)
 class SNAKEGAMEUNREAL_API ASnakePlayingGameModeBase : public AGameMode
 {
 	GENERATED_BODY()
-	
+
+public:
+	const TObjectPtr<UMiscellaneousFunctions> GetMiscFunctions() const;
 private:
+	UPROPERTY()
+	TObjectPtr<UMiscellaneousFunctions> m_miscFunctions;
 	UPROPERTY()
 	TObjectPtr<UAppleSpawner> m_appleSpawner =  nullptr;
 	UPROPERTY()

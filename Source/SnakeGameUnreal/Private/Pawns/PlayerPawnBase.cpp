@@ -24,6 +24,7 @@ void APlayerPawnBase::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 void APlayerPawnBase::InitializeProperties()
 {
+	m_gameState = Cast<ASnakeGameState>(GetWorld()->GetGameState());
 	m_appleSpawner = GetWorld()->GetSubsystem<USpawning_World_Subsystem>()->GetAppleSpawner();
 	m_snakeSegmentDefaultBlueprint = GetGameInstance()->GetSubsystem<UPersistentData_Instance_Subsystem>()
 	->GetGameData()->m_SnakeSegment;
@@ -31,12 +32,22 @@ void APlayerPawnBase::InitializeProperties()
 
 void APlayerPawnBase::SubscribeToEvents()
 {
-	m_appleSpawner->OnAppleEaten.AddDynamic(this, &APlayerPawnBase::OnPlayerAteApple);
+	if (m_gameState == nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(1, 5, FColor::Red, "Game State nullptr");
+		return;
+	}
+	m_gameState->SubscribeToDelegate(m_gameState->GetAppleEatenDelegate(), this, m_appleEatenSubscriberName);
 }
 
 void APlayerPawnBase::UnsubscribeFromEvents()
 {
-	m_appleSpawner->OnAppleEaten.RemoveDynamic(this, &APlayerPawnBase::OnPlayerAteApple);
+	if (m_gameState == nullptr)
+	{
+		GEngine->AddOnScreenDebugMessage(1, 5, FColor::Red, "Game State nullptr");
+		return;
+	}
+	m_gameState->UnsubscribeFromDelegate(m_gameState->GetAppleEatenDelegate(), this, m_appleEatenSubscriberName);
 }
 
 void APlayerPawnBase::Tick(float DeltaTime)

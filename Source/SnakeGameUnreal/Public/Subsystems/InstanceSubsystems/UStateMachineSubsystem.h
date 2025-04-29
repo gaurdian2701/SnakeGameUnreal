@@ -21,6 +21,7 @@ protected:
 	TMap<UClass*, UStateBase*> m_StateObjects;
 
 public:
+	UFUNCTION(BlueprintCallable)
 	virtual void SwitchState_Implementation(const UClass* NewState) override;
 	virtual void UpdateStateMachine_Implementation(float DeltaTime) override;
 };

@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
 #include "Subsystems/WorldSubsystems/LevelBuilder_World_Subsystem.h"
+#include "Misc/MiscellaneousFunctions.h"
 #include "UObject/Object.h"
 #include "GridSystem.generated.h"
 
@@ -37,7 +38,10 @@ public:
 private:
 	UPROPERTY()
 	TObjectPtr<ULevelBuilder_World_Subsystem> m_levelBuilder;
-	
+
+	UPROPERTY()
+	TObjectPtr<UMiscellaneousFunctions> m_miscFunctions;
+
 	UPROPERTY()
 	TArray<FGridTile> m_gridTiles;
 	
@@ -46,6 +50,4 @@ private:
 	
 	int32 m_gridRows = 0;
 	int32 m_gridColumns = 0;
-
-	int32 GetHash(int32 XIndex, int32 YIndex);
 };

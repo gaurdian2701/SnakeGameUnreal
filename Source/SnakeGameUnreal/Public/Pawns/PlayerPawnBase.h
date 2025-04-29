@@ -5,6 +5,7 @@
 #include "Components/BodyGrowingComponent.h"
 #include "GameSystems/UAppleSpawner.h"
 #include "GameFramework/FloatingPawnMovement.h"
+#include "StateInfo/SnakeGameState.h"
 #include "PlayerPawnBase.generated.h"
 
 UCLASS()
@@ -17,6 +18,9 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 protected:
+	UPROPERTY()
+	TObjectPtr<ASnakeGameState> m_gameState = nullptr;
+	
 	UPROPERTY()
 	TObjectPtr<UFloatingPawnMovement> m_snakePawnMovementComponent = nullptr;
 
@@ -52,6 +56,7 @@ protected:
 
 private:
 	FVector m_currentInputVector = FVector::ZeroVector;
+	FName m_appleEatenSubscriberName = GET_FUNCTION_NAME_CHECKED(APlayerPawnBase, OnPlayerAteApple);
 
 	void InitializeProperties();
 	void SubscribeToEvents();
