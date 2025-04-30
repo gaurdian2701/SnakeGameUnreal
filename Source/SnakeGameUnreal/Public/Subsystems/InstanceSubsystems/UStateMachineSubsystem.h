@@ -15,6 +15,9 @@ protected:
 	virtual void AddStates_Implementation() override;
 
 	UPROPERTY()
+	TSoftObjectPtr<UWorld> m_newLevelToBeLoaded;
+	
+	UPROPERTY()
 	TObjectPtr<UStateBase> m_currentState = nullptr;
 	
 	UPROPERTY()
@@ -22,6 +25,12 @@ protected:
 
 public:
 	UFUNCTION(BlueprintCallable)
-	virtual void SwitchState_Implementation(const UClass* NewState) override;
+	virtual void SwitchState_Implementation(const UClass* NewState, const TSoftObjectPtr<UWorld>& NewLevelToBeLoaded) override;
 	virtual void UpdateStateMachine_Implementation(float DeltaTime) override;
+	TSoftObjectPtr<UWorld> GetNewLevelToBeLoaded();
+
+private:
+	void InitializeNewState(UClass* stateClass);
 };
+
+

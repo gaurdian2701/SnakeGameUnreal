@@ -20,8 +20,18 @@ UDelegateData::FOnAppleEaten& ASnakeGameState::GetAppleEatenDelegate() const
 	return m_delegateData->OnAppleEaten;
 }
 
+UDelegateData::FOnPlayerDied& ASnakeGameState::GetPlayerDiedDelegate() const
+{
+	return m_delegateData->OnPlayerDied;
+}
+
+UDelegateData* ASnakeGameState::GetDelegateData()
+{
+	return m_delegateData;
+}
+
 void ASnakeGameState::SubscribeToDelegate(FMulticastScriptDelegate& DelegateEvent, UObject* SubscriberClass,
-	const FName& SubscriberFunctionName)
+                                          const FName& SubscriberFunctionName)
 {
 	FScriptDelegate ScriptDelegate;
 	ScriptDelegate.BindUFunction(SubscriberClass, SubscriberFunctionName);

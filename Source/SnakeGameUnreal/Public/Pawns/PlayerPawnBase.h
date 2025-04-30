@@ -36,6 +36,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Turn Speed")
 	float m_turnSpeed = 0.0f;
 
+	UPROPERTY(EditAnywhere, Category = "Trace Start Offset")
+	int m_traceStartOffset = 0;
+
+	UPROPERTY(EditAnywhere, Category = "Trace Length")
+	int m_traceLength = 0;
+
 	UPROPERTY()
 	TObjectPtr<UAppleSpawner> m_appleSpawner = nullptr;
 
@@ -57,9 +63,12 @@ protected:
 private:
 	FVector m_currentInputVector = FVector::ZeroVector;
 	FName m_appleEatenSubscriberName = GET_FUNCTION_NAME_CHECKED(APlayerPawnBase, OnPlayerAteApple);
+	FCollisionObjectQueryParams objectsIncluded;
+	FCollisionQueryParams queryParams;
 
 	void InitializeProperties();
 	void SubscribeToEvents();
 	void UnsubscribeFromEvents();
 	void AddNewSnakeSegment();
+	void CheckIfSnakeIsColliding();
 };

@@ -1,5 +1,10 @@
 ﻿#include "States/StateBase.h"
 
+void UStateBase::InitState(const TScriptInterface<IStateMachine> OwnerStateMachine)
+{
+	m_ownerStateMachine = OwnerStateMachine;
+}
+
 void UStateBase::EnterState_Implementation()
 {
 	IState::EnterState_Implementation();

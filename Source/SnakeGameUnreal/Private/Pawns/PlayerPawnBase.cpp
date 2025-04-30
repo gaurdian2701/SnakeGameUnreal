@@ -24,10 +24,11 @@ void APlayerPawnBase::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 void APlayerPawnBase::InitializeProperties()
 {
+	queryParams = FCollisionQueryParams(FName(TEXT("Snake Head Collision Trace")), true, GetOwner());
 	m_gameState = Cast<ASnakeGameState>(GetWorld()->GetGameState());
 	m_appleSpawner = GetWorld()->GetSubsystem<USpawning_World_Subsystem>()->GetAppleSpawner();
 	m_snakeSegmentDefaultBlueprint = GetGameInstance()->GetSubsystem<UPersistentData_Instance_Subsystem>()
-	->GetGameData()->m_SnakeSegment;
+	                                                  ->GetGameData()->m_SnakeSegment;
 }
 
 void APlayerPawnBase::SubscribeToEvents()
@@ -54,6 +55,7 @@ void APlayerPawnBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	m_snakePawnMovementComponent->AddInputVector(m_moveSpeed * DeltaTime * GetActorForwardVector());
+	CheckIfSnakeIsColliding();
 }
 
 void APlayerPawnBase::OnMove(const float& x, const float& y)
@@ -81,6 +83,24 @@ void APlayerPawnBase::AddNewSnakeSegment()
 	m_bodyGrowingComponent->AddNewBodySegment();
 }
 
+void APlayerPawnBase::CheckIfSnakeIsColliding()
+{
+	FHitResult snakeHeadCollisionHitResult;
+	FVector traceStart = GetActorLocation() + GetActorForwardVector() * GetActorScale().Length() * m_traceStartOffset;
+	FVector traceEnd = traceStart + GetActorForwardVector() * m_traceLength;
 
+	objectsIncluded.AddObjectTypesToQuery(ECC_Pawn);
+	objectsIncluded.AddObjectTypesToQuery(ECC_WorldStatic);
+	objectsIncluded.AddObjectTypesToQuery(ECC_WorldDynamic);
 
+	if (GetWorld()->LineTraceSingleByObjectType(snakeHeadCollisionHitResult, traceStart, traceEnd, objectsIncluded,
+	                                            queryParams))
+	{
+		GEngine->AddOnScreenDebugMessage(2, 5, FColor::Red,
+		                                 FString::Printf(
+			                                 TEXT("HIT %s"), *snakeHeadCollisionHitResult.GetActor()->GetName()));
+		Cast<ASnakeGameState>(GetWorld()->GetGameState())->GetPlayerDiedDelegate().Broadcast();
+	}
 
+	DrawDebugLine(GetWorld(), traceStart, traceEnd, FColor::Red, false, -1, 0, 2.0f);
+}

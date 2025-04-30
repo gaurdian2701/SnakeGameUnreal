@@ -21,6 +21,9 @@ public:
 	ASnakeGameState();
 	TObjectPtr<UDelegateData> GetDelegateData() const;
 	UDelegateData::FOnAppleEaten& GetAppleEatenDelegate() const;
+	UDelegateData::FOnPlayerDied& GetPlayerDiedDelegate() const;
+	UFUNCTION(BlueprintCallable, Category = "Snake Game State Func")
+	UDelegateData* GetDelegateData();
 	void SubscribeToDelegate(FMulticastScriptDelegate& DelegateEvent, UObject* SubscriberClass, const FName& SubscriberFunctionName);
 	void UnsubscribeFromDelegate(FMulticastScriptDelegate& DelegateEvent, UObject* SubscriberClass, const FName& SubscriberFunctionName); 
 };

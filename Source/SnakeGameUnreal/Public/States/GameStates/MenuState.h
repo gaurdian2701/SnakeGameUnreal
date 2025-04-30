@@ -10,6 +10,7 @@ class SNAKEGAMEUNREAL_API UMenuState : public UStateBase
 {
 	GENERATED_BODY()
 
+public:
 	virtual void EnterState_Implementation() override;
 	virtual void UpdateState_Implementation() override;
 	virtual void ExitState_Implementation() override;

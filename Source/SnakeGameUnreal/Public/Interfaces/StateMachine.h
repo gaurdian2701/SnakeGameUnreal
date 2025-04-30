@@ -19,7 +19,7 @@ public:
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void AddStates();
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-	void SwitchState(const UClass* NewState);
+	void SwitchState(const UClass* NewState, const TSoftObjectPtr<UWorld>& NewLevelToBeLoaded);
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 	void UpdateStateMachine(float DeltaTime);
 };
