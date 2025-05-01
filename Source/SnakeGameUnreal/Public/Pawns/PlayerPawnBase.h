@@ -21,7 +21,7 @@ protected:
 	UPROPERTY()
 	TObjectPtr<ASnakeGameState> m_gameState = nullptr;
 	
-	UPROPERTY()
+	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UFloatingPawnMovement> m_snakePawnMovementComponent = nullptr;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)

@@ -38,7 +38,8 @@ void APlayerPawnBase::SubscribeToEvents()
 		GEngine->AddOnScreenDebugMessage(1, 5, FColor::Red, "Game State nullptr");
 		return;
 	}
-	m_gameState->SubscribeToDelegate(m_gameState->GetAppleEatenDelegate(), this, m_appleEatenSubscriberName);
+	m_gameState->SubscribeToDelegate(m_gameState->GetDelegateData()->GetOnAppleEatenDelegate(),
+		this, m_appleEatenSubscriberName);
 }
 
 void APlayerPawnBase::UnsubscribeFromEvents()
@@ -48,7 +49,8 @@ void APlayerPawnBase::UnsubscribeFromEvents()
 		GEngine->AddOnScreenDebugMessage(1, 5, FColor::Red, "Game State nullptr");
 		return;
 	}
-	m_gameState->UnsubscribeFromDelegate(m_gameState->GetAppleEatenDelegate(), this, m_appleEatenSubscriberName);
+	m_gameState->UnsubscribeFromDelegate(m_gameState->GetDelegateData()->GetOnAppleEatenDelegate(),
+		this, m_appleEatenSubscriberName);
 }
 
 void APlayerPawnBase::Tick(float DeltaTime)
@@ -99,7 +101,7 @@ void APlayerPawnBase::CheckIfSnakeIsColliding()
 		GEngine->AddOnScreenDebugMessage(2, 5, FColor::Red,
 		                                 FString::Printf(
 			                                 TEXT("HIT %s"), *snakeHeadCollisionHitResult.GetActor()->GetName()));
-		Cast<ASnakeGameState>(GetWorld()->GetGameState())->GetPlayerDiedDelegate().Broadcast();
+		Cast<ASnakeGameState>(GetWorld()->GetGameState())->GetDelegateData()->GetOnPlayerDiedDelegate().Broadcast();
 	}
 
 	DrawDebugLine(GetWorld(), traceStart, traceEnd, FColor::Red, false, -1, 0, 2.0f);

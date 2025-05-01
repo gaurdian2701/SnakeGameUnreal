@@ -8,15 +8,26 @@ class SNAKEGAMEUNREAL_API UDelegateData : public UObject
 {
 	GENERATED_BODY()
 
-public:
-	UDelegateData(const FObjectInitializer& ObjectInitializer){}
-	
+private:
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAppleEaten, APlayerPawnBase*, PlayerPawn);
-	UPROPERTY()
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = "Snake Events")
 	FOnAppleEaten OnAppleEaten;
 
-	UDELEGATE(BlueprintCallable)
 	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnPlayerDied);
-	UPROPERTY(BlueprintAssignable, Category = "Snake Events")
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = "Snake Events")
 	FOnPlayerDied OnPlayerDied;
+
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnGameRestarted);
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable, Category = "Snake Events")
+	FOnGameRestarted OnGameRestarted;
+
+public:
+	UDelegateData(const FObjectInitializer& ObjectInitializer){}
+
+	FOnAppleEaten& GetOnAppleEatenDelegate();
+	FOnPlayerDied& GetOnPlayerDiedDelegate();
+	FOnGameRestarted& GetOnGameRestartedDelegate();
 };

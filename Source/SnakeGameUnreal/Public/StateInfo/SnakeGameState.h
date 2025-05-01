@@ -13,17 +13,13 @@ class SNAKEGAMEUNREAL_API ASnakeGameState : public AGameState
 protected:
 	UPROPERTY()
 	TObjectPtr<UDelegateData> m_delegateData;
-
 	virtual void BeginPlay() override;
 
 
 public:
 	ASnakeGameState();
-	TObjectPtr<UDelegateData> GetDelegateData() const;
-	UDelegateData::FOnAppleEaten& GetAppleEatenDelegate() const;
-	UDelegateData::FOnPlayerDied& GetPlayerDiedDelegate() const;
-	UFUNCTION(BlueprintCallable, Category = "Snake Game State Func")
-	UDelegateData* GetDelegateData();
+	UFUNCTION(BlueprintCallable, Blueprintable, Category = "SnakeGameState")
+	UDelegateData* GetDelegateData() const;
 	void SubscribeToDelegate(FMulticastScriptDelegate& DelegateEvent, UObject* SubscriberClass, const FName& SubscriberFunctionName);
 	void UnsubscribeFromDelegate(FMulticastScriptDelegate& DelegateEvent, UObject* SubscriberClass, const FName& SubscriberFunctionName); 
 };

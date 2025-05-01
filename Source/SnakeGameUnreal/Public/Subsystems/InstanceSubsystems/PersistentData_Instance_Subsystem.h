@@ -10,7 +10,8 @@ class SNAKEGAMEUNREAL_API UPersistentData_Instance_Subsystem : public UGameInsta
 {
 	GENERATED_BODY()
 public:
-	const TObjectPtr<USnakeGameDataAsset> GetGameData() const;
+	UFUNCTION(BlueprintCallable, Category = "Persistent Data Instance Subsystem")
+	USnakeGameDataAsset* GetGameData() const;
 
 	void SetGameData(const TObjectPtr<USnakeGameDataAsset> GameData);
 	

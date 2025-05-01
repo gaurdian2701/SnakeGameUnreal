@@ -40,4 +40,13 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Level Room Data")
 	TArray<FRoomData> m_RoomData;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Single Player Level Soft Object Reference")
+	TSoftObjectPtr<UWorld> m_singlePlayerLevel;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Co-op Level Soft Object Reference")
+	TSoftObjectPtr<UWorld> m_cooperativeLevel;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Versus AI Level Soft Object Reference")
+	TSoftObjectPtr<UWorld> m_versusAILevel;
 };

@@ -36,12 +36,14 @@ void ASnakeAIController::GetNextAppleLocation()
 
 void ASnakeAIController::SubscribeToEvents()
 {
-	m_snakeGameState->SubscribeToDelegate(m_snakeGameState->GetAppleEatenDelegate(), this, m_appleEatenSubscriberName);
+	m_snakeGameState->SubscribeToDelegate(m_snakeGameState->GetDelegateData()->GetOnAppleEatenDelegate(),
+		this, m_appleEatenSubscriberName);
 }
 
 void ASnakeAIController::UnsubscribeFromEvents()
 {
-	m_snakeGameState->UnsubscribeFromDelegate(m_snakeGameState->GetAppleEatenDelegate(), this, m_appleEatenSubscriberName);
+	m_snakeGameState->UnsubscribeFromDelegate(m_snakeGameState->GetDelegateData()->GetOnAppleEatenDelegate(),
+		this, m_appleEatenSubscriberName);
 }
 
 

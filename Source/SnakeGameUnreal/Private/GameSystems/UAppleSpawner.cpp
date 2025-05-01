@@ -16,7 +16,7 @@ void UAppleSpawner::HandleAppleEaten(AApple* AppleBeingEaten, APlayerPawnBase* P
 	m_gridSystem->DestroyActorFromPosition(AppleBeingEaten->GetActorLocation().X, AppleBeingEaten->GetActorLocation().Y);
 	m_applesSpawned.Remove(AppleBeingEaten);
 	SpawnNewApple();
-	m_snakeGameState->GetAppleEatenDelegate().Broadcast(PlayerWhoAteApple);
+	m_snakeGameState->GetDelegateData()->GetOnAppleEatenDelegate().Broadcast(PlayerWhoAteApple);
 }
 
 void UAppleSpawner::SpawnNewApple()

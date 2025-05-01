@@ -10,24 +10,9 @@ void ASnakeGameState::BeginPlay()
 	m_delegateData = NewObject<UDelegateData>(this);
 }
 
-TObjectPtr<UDelegateData> ASnakeGameState::GetDelegateData() const
+UDelegateData* ASnakeGameState::GetDelegateData() const
 {
-	return m_delegateData;
-}
-
-UDelegateData::FOnAppleEaten& ASnakeGameState::GetAppleEatenDelegate() const
-{
-	return m_delegateData->OnAppleEaten;
-}
-
-UDelegateData::FOnPlayerDied& ASnakeGameState::GetPlayerDiedDelegate() const
-{
-	return m_delegateData->OnPlayerDied;
-}
-
-UDelegateData* ASnakeGameState::GetDelegateData()
-{
-	return m_delegateData;
+	return m_delegateData.Get();
 }
 
 void ASnakeGameState::SubscribeToDelegate(FMulticastScriptDelegate& DelegateEvent, UObject* SubscriberClass,

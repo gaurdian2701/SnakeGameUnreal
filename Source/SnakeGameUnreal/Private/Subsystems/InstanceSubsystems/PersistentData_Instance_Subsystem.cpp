@@ -6,7 +6,7 @@ void UPersistentData_Instance_Subsystem::SetGameData(const TObjectPtr<USnakeGame
 	m_GameData = GameData;
 }
 
-const TObjectPtr<USnakeGameDataAsset> UPersistentData_Instance_Subsystem::GetGameData() const
+USnakeGameDataAsset* UPersistentData_Instance_Subsystem::GetGameData() const
 {
 	return m_GameData;
 }
