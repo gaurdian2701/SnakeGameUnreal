@@ -38,8 +38,14 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Floor Mesh Offset")
 	float m_FloorMeshOffset = 0.0f;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Level Room Data")
-	TArray<FRoomData> m_RoomData;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Room Data - Easy Mode")
+	FRoomData m_RoomDataEasyMode;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Room Data - Medium Mode")
+	FRoomData m_RoomDataMediumMode;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Room Data - Hard Mode")
+	FRoomData m_RoomDataHardMode;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Single Player Level Soft Object Reference")
 	TSoftObjectPtr<UWorld> m_singlePlayerLevel;

@@ -19,7 +19,7 @@ protected:
 public:
 	ASnakeGameState();
 	UFUNCTION(BlueprintCallable, Blueprintable, Category = "SnakeGameState")
-	UDelegateData* GetDelegateData() const;
+	UDelegateData* GetDelegateData();
 	void SubscribeToDelegate(FMulticastScriptDelegate& DelegateEvent, UObject* SubscriberClass, const FName& SubscriberFunctionName);
 	void UnsubscribeFromDelegate(FMulticastScriptDelegate& DelegateEvent, UObject* SubscriberClass, const FName& SubscriberFunctionName); 
 };

@@ -8,5 +8,15 @@ void USnakeGameInstance::Init()
 	m_persistentDataSubsystem->SetGameData(m_snakeGameData);
 }
 
+void USnakeGameInstance::SetGameDifficulty(GameDifficultyEnum GameDifficulty)
+{
+	m_currentGameDifficulty = GameDifficulty;
+}
+
+GameDifficultyEnum USnakeGameInstance::GetGameDifficulty() const
+{
+	return m_currentGameDifficulty;
+}
+
 
 

@@ -8,7 +8,8 @@ void ASnakeCooperative_GameMode::BeginPlay()
 
 APawn* ASnakeCooperative_GameMode::SpawnDefaultPawnFor_Implementation(AController* NewPlayer, AActor* StartSpot)
 {
-	CreateNewPlayer();
+	if (GetGameInstance()->GetLocalPlayers().Num() < 2)
+		CreateNewPlayer();
 	return Super::SpawnDefaultPawnFor_Implementation(NewPlayer, StartSpot);
 }
 

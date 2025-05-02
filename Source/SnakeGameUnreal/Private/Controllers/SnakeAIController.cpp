@@ -26,7 +26,9 @@ void ASnakeAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	FRotator rotatorOfTargetVector = (m_nextAppleLocation - m_snakePawn->GetActorLocation()).Rotation();
-	m_snakePawn->SetActorRotation(rotatorOfTargetVector);
+	FRotator snakeRotation = m_snakePawn->GetActorRotation();
+	FRotator targetRotation = FMath::RInterpTo(snakeRotation, rotatorOfTargetVector, DeltaTime, m_snakePawn->GetTurnSpeed());
+	m_snakePawn->SetActorRotation(targetRotation);
 }
 
 void ASnakeAIController::GetNextAppleLocation()
@@ -38,12 +40,21 @@ void ASnakeAIController::SubscribeToEvents()
 {
 	m_snakeGameState->SubscribeToDelegate(m_snakeGameState->GetDelegateData()->GetOnAppleEatenDelegate(),
 		this, m_appleEatenSubscriberName);
+	m_snakeGameState->SubscribeToDelegate(m_snakeGameState->GetDelegateData()->GetOnPlayerDiedDelegate(),
+		this, m_playerDiedSubscriberName);
 }
 
 void ASnakeAIController::UnsubscribeFromEvents()
 {
 	m_snakeGameState->UnsubscribeFromDelegate(m_snakeGameState->GetDelegateData()->GetOnAppleEatenDelegate(),
 		this, m_appleEatenSubscriberName);
+	m_snakeGameState->UnsubscribeFromDelegate(m_snakeGameState->GetDelegateData()->GetOnPlayerDiedDelegate(),
+	this, m_playerDiedSubscriberName);
+}
+
+void ASnakeAIController::OnPlayerDied()
+{
+	m_snakePawn->SetActorTickEnabled(false);
 }
 
 

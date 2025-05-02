@@ -10,8 +10,10 @@ void ASnakeGameState::BeginPlay()
 	m_delegateData = NewObject<UDelegateData>(this);
 }
 
-UDelegateData* ASnakeGameState::GetDelegateData() const
+UDelegateData* ASnakeGameState::GetDelegateData()
 {
+	if (m_delegateData == nullptr)
+		m_delegateData = NewObject<UDelegateData>(this);
 	return m_delegateData.Get();
 }
 

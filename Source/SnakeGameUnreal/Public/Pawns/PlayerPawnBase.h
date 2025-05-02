@@ -16,6 +16,7 @@ class SNAKEGAMEUNREAL_API APlayerPawnBase : public APawn
 public:
 	APlayerPawnBase();
 	virtual void Tick(float DeltaTime) override;
+	float GetTurnSpeed() const;
 
 protected:
 	UPROPERTY()

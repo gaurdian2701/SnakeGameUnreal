@@ -18,9 +18,12 @@ public:
 protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
 	UFUNCTION()
 	void GetNextAppleLocation();
-
+	UFUNCTION()
+	void OnPlayerDied();
+	
 	UPROPERTY()
 	TObjectPtr<ASnakeGameState> m_snakeGameState;
 	UPROPERTY()
@@ -34,6 +37,7 @@ protected:
 
 private:
 	FName m_appleEatenSubscriberName = GET_FUNCTION_NAME_CHECKED(ASnakeAIController, GetNextAppleLocation);
+	FName m_playerDiedSubscriberName = GET_FUNCTION_NAME_CHECKED(ASnakeAIController, OnPlayerDied);
 	
 	void SubscribeToEvents();
 	void UnsubscribeFromEvents();

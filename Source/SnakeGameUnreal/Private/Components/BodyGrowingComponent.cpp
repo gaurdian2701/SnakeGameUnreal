@@ -1,6 +1,5 @@
 ﻿#include "Components/BodyGrowingComponent.h"
 
-
 UBodyGrowingComponent::UBodyGrowingComponent()
 {
 	PrimaryComponentTick.bCanEverTick = false;
@@ -10,6 +9,7 @@ void UBodyGrowingComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	m_mainHead = GetOwner();
+	m_snakeGameState = Cast<ASnakeGameState>(GetWorld()->GetGameState());
 }
 
 

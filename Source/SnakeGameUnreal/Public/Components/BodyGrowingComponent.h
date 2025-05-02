@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "CoreMinimal.h"
+#include "StateInfo/SnakeGameState.h"
 #include "Components/ActorComponent.h"
 #include "Actors/ABodySegmentBase.h"
 #include "BodyGrowingComponent.generated.h"
@@ -26,4 +27,7 @@ protected:
 	
 	UPROPERTY()
 	TArray<TObjectPtr<AActor>> m_bodySegments;
+
+	UPROPERTY()
+	TObjectPtr<ASnakeGameState> m_snakeGameState;
 };

@@ -33,8 +33,7 @@ TObjectPtr<AActor> UGridSystem::SpawnActorAtIndex(TSubclassOf<AActor> Actor, int
 		UE_LOGFMT(LogTemp, Error, "TILE ALREADY OCCUPIED AT {0},{1}", XIndex, YIndex);
 		return nullptr;
 	}
-
-
+	
 	TObjectPtr<AActor> spawnedActor = GetWorld()->SpawnActor<AActor>(Actor, FVector(XIndex * m_levelBuilder->BUILDER_SCALING_VALUE,
 		YIndex * m_levelBuilder->BUILDER_SCALING_VALUE,height), FRotator::ZeroRotator, FActorSpawnParameters());
 	

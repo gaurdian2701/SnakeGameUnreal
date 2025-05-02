@@ -1,5 +1,9 @@
 ﻿#include "Pawns/PlayerPawnBase.h"
+
+#include "Core/SnakeGameInstance.h"
+#include "States/GameStates/EndState.h"
 #include "Subsystems/InstanceSubsystems/PersistentData_Instance_Subsystem.h"
+#include "Subsystems/InstanceSubsystems/UStateMachineSubsystem.h"
 #include "Subsystems/WorldSubsystems/Spawning_World_Subsystem.h"
 
 APlayerPawnBase::APlayerPawnBase()
@@ -60,6 +64,11 @@ void APlayerPawnBase::Tick(float DeltaTime)
 	CheckIfSnakeIsColliding();
 }
 
+float APlayerPawnBase::GetTurnSpeed() const
+{
+	return m_turnSpeed;
+}
+
 void APlayerPawnBase::OnMove(const float& x, const float& y)
 {
 	APlayerController* currentController = Cast<APlayerController>(GetController());
@@ -101,8 +110,8 @@ void APlayerPawnBase::CheckIfSnakeIsColliding()
 		GEngine->AddOnScreenDebugMessage(2, 5, FColor::Red,
 		                                 FString::Printf(
 			                                 TEXT("HIT %s"), *snakeHeadCollisionHitResult.GetActor()->GetName()));
-		Cast<ASnakeGameState>(GetWorld()->GetGameState())->GetDelegateData()->GetOnPlayerDiedDelegate().Broadcast();
-	}
 
-	DrawDebugLine(GetWorld(), traceStart, traceEnd, FColor::Red, false, -1, 0, 2.0f);
+		Cast<USnakeGameInstance>(GetGameInstance())->GetSubsystem<UStateMachineSubsystem>()->SwitchState_Implementation(UEndState::StaticClass(),
+			GetWorld());
+	}
 }

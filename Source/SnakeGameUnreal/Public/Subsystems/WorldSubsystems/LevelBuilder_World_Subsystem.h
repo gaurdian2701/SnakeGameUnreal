@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "CoreMinimal.h"
+#include "DataAssets/SnakeGameDataAsset.h"
 #include "GameFramework/Actor.h"
 #include "Subsystems/WorldSubsystem.h"
 #include "Engine/StaticMeshActor.h"
@@ -42,6 +43,8 @@ private:
 	TObjectPtr<UGridSystem> m_gridSystem;
 
 	void Init();
+	FRoomData GetDifficultyParams(TObjectPtr<USnakeGameDataAsset> DataAsset);
 	void PlaceFloorsAndCeiling();
 	void PlaceWalls();
+	void SpawnObstacles();
 };

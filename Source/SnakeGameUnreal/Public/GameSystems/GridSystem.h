@@ -44,6 +44,9 @@ private:
 
 	UPROPERTY()
 	TArray<FGridTile> m_gridTiles;
+
+	UPROPERTY()
+	TArray<FGridTile> m_unoccupiedGridTiles;
 	
 	UPROPERTY()
 	TMap<int, TObjectPtr<AActor>> m_spawnedActorsInScene;

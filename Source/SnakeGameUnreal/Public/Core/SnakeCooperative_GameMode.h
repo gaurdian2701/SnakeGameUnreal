@@ -9,6 +9,7 @@ UCLASS(Blueprintable)
 class SNAKEGAMEUNREAL_API ASnakeCooperative_GameMode : public ASnakePlayingGameModeBase
 {
 	GENERATED_BODY()
+	
 protected:
 	virtual void BeginPlay() override;
 
