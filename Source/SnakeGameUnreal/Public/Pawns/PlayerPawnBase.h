@@ -2,11 +2,13 @@
 #include "CoreMinimal.h"
 #include "EnhancedInputComponent.h"
 #include "Actors/ABodySegmentBase.h"
-#include "Components/BodyGrowingComponent.h"
 #include "GameSystems/UAppleSpawner.h"
 #include "GameFramework/FloatingPawnMovement.h"
 #include "StateInfo/SnakeGameState.h"
 #include "PlayerPawnBase.generated.h"
+
+class UObstacleAvoidanceComponent;
+class UBodyGrowingComponent;
 
 UCLASS()
 class SNAKEGAMEUNREAL_API APlayerPawnBase : public APawn
@@ -25,8 +27,11 @@ protected:
 	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UFloatingPawnMovement> m_snakePawnMovementComponent = nullptr;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditDefaultsOnly)
 	TObjectPtr<UBodyGrowingComponent> m_bodyGrowingComponent = nullptr;
+
+	UPROPERTY(EditDefaultsOnly)
+	TObjectPtr<UObstacleAvoidanceComponent> m_obstacleAvoidanceComponent = nullptr;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Move Action")
 	TObjectPtr<UInputAction> m_moveAction = nullptr;

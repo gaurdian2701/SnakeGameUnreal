@@ -8,21 +8,26 @@ void UAppleSpawner::Init(TObjectPtr<USnakeGameDataAsset> GameDataAsset)
 	m_appleBlueprint = GameDataAsset->m_AppleBlueprint;
 	m_gridSystem = GetWorld()->GetSubsystem<ULevelBuilder_World_Subsystem>()->GetGridSystem();
 	m_appleSpawningHeight = GetWorld()->GetSubsystem<ULevelBuilder_World_Subsystem>()->GetRoomHeight()/2;
-	SpawnNewApple();
+	SpawnMoreApples();
 }
 
 void UAppleSpawner::HandleAppleEaten(AApple* AppleBeingEaten, APlayerPawnBase* PlayerWhoAteApple)
 {
 	m_gridSystem->DestroyActorFromPosition(AppleBeingEaten->GetActorLocation().X, AppleBeingEaten->GetActorLocation().Y);
 	m_applesSpawned.Remove(AppleBeingEaten);
-	SpawnNewApple();
+	if (++m_appleDespawnCounter == 5)
+		SpawnMoreApples();
 	m_snakeGameState->GetDelegateData()->GetOnAppleEatenDelegate().Broadcast(PlayerWhoAteApple);
 }
 
-void UAppleSpawner::SpawnNewApple()
+void UAppleSpawner::SpawnMoreApples()
 {
-	FIntVector2 spawnPos = m_gridSystem->GetRandomGridIndex();
-	m_applesSpawned.Add(m_gridSystem->SpawnActorAtIndex(m_appleBlueprint, spawnPos.X, spawnPos.Y, m_appleSpawningHeight));
+	m_appleDespawnCounter = 0;
+	for (int32 i = 0; i < 5; i++)
+	{
+		FIntVector2 spawnPos = m_gridSystem->GetRandomGridIndex();
+		m_applesSpawned.Add(m_gridSystem->SpawnActorAtIndex(m_appleBlueprint, spawnPos.X, spawnPos.Y, m_appleSpawningHeight));
+	}
 }
 
 FVector UAppleSpawner::GetNextAppleLocation()

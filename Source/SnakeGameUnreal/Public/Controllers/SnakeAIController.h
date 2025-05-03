@@ -11,13 +11,17 @@ class SNAKEGAMEUNREAL_API ASnakeAIController : public AAIController
 	GENERATED_BODY()
 
 public:
+	bool bControlOverridden = false;
+	
 	ASnakeAIController();
+	void DoOverriddenControllingMovement(FRotator UpdatedPawnRotation);
 	virtual void Tick(float DeltaTime) override;
 
 
 protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+
 
 	UFUNCTION()
 	void GetNextAppleLocation();
@@ -36,9 +40,11 @@ protected:
 	FVector m_nextAppleLocation;
 
 private:
+	FRotator m_targetPawnRotation;
 	FName m_appleEatenSubscriberName = GET_FUNCTION_NAME_CHECKED(ASnakeAIController, GetNextAppleLocation);
 	FName m_playerDiedSubscriberName = GET_FUNCTION_NAME_CHECKED(ASnakeAIController, OnPlayerDied);
 	
 	void SubscribeToEvents();
 	void UnsubscribeFromEvents();
+	void DoDefaultPawnUpdate(float DeltaTime);
 };

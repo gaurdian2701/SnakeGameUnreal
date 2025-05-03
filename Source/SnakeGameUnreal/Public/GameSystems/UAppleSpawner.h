@@ -23,6 +23,7 @@ public:
 
 private:
 	int32 m_appleSpawningHeight = 0;
+	int32 m_appleDespawnCounter = 0;
 
 	UPROPERTY()
 	TArray<TObjectPtr<AActor>> m_applesSpawned;
@@ -33,5 +34,5 @@ private:
 	UPROPERTY()
 	TObjectPtr<ASnakeGameState> m_snakeGameState;
 	
-	void SpawnNewApple();
+	void SpawnMoreApples();
 };

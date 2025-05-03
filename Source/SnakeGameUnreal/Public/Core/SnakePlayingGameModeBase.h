@@ -14,6 +14,7 @@ class SNAKEGAMEUNREAL_API ASnakePlayingGameModeBase : public AGameMode
 
 public:
 	const TObjectPtr<UMiscellaneousFunctions> GetMiscFunctions() const;
+	
 private:
 	UPROPERTY()
 	TObjectPtr<UMiscellaneousFunctions> m_miscFunctions;
@@ -23,7 +24,9 @@ private:
 	TObjectPtr<ULevelBuilder_World_Subsystem> m_levelBuilder = nullptr;
 	UPROPERTY()
 	TObjectPtr<USpawning_World_Subsystem> m_spawningSubsystem = nullptr;
-
+	UPROPERTY()
+	TObjectPtr<ASnakeGameState> m_snakeGameState;
+	
 	void GetSubsystems();
 	void StartSubsystems();
 	

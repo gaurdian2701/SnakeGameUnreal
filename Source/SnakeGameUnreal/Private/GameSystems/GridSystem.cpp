@@ -93,9 +93,20 @@ void UGridSystem::PlaceBoundaries(TSubclassOf<AActor>& Actor)
 
 FIntVector2 UGridSystem::GetRandomGridIndex()
 {
-	FIntVector2 gridPos;
-	gridPos = FIntVector2(FMath::RandRange(1, m_gridRows-2),
-	FMath::RandRange(1, m_gridColumns-2));
+	FIntVector2 gridPos = FIntVector2::ZeroValue;
+	int32 spawnRow = FMath::RandRange(1, m_gridRows-2);
+	int32 spawnColumn = FMath::RandRange(1, m_gridColumns-2);
+
+	if (m_gridTiles[spawnRow * m_gridColumns + spawnColumn].bOccupied)
+	{
+		for (int32 columnToSpawnIn = 0; columnToSpawnIn < spawnColumn; columnToSpawnIn++)
+		{
+			if (!m_gridTiles[spawnRow * m_gridColumns + columnToSpawnIn].bOccupied)
+				gridPos = FIntVector2(spawnRow, columnToSpawnIn);
+		}
+	}
+	else
+		gridPos = FIntVector2(spawnRow, spawnColumn);
 	return gridPos;
 }
 

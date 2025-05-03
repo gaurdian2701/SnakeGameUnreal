@@ -2,6 +2,8 @@
 
 #include "Core/SnakeGameInstance.h"
 #include "States/GameStates/EndState.h"
+#include "Components/ObstacleAvoidanceComponent.h"
+#include "Components/BodyGrowingComponent.h"
 #include "Subsystems/InstanceSubsystems/PersistentData_Instance_Subsystem.h"
 #include "Subsystems/InstanceSubsystems/UStateMachineSubsystem.h"
 #include "Subsystems/WorldSubsystems/Spawning_World_Subsystem.h"
@@ -11,6 +13,7 @@ APlayerPawnBase::APlayerPawnBase()
 	PrimaryActorTick.bCanEverTick = true;
 	m_snakePawnMovementComponent = CreateDefaultSubobject<UFloatingPawnMovement>(TEXT("Snake Pawn Movement"));
 	m_bodyGrowingComponent = CreateDefaultSubobject<UBodyGrowingComponent>(TEXT("Snake Growing Component"));
+	m_obstacleAvoidanceComponent = CreateDefaultSubobject<UObstacleAvoidanceComponent>(TEXT("Snake Obstacle Avoidance Component"));
 }
 
 void APlayerPawnBase::BeginPlay()
@@ -33,6 +36,9 @@ void APlayerPawnBase::InitializeProperties()
 	m_appleSpawner = GetWorld()->GetSubsystem<USpawning_World_Subsystem>()->GetAppleSpawner();
 	m_snakeSegmentDefaultBlueprint = GetGameInstance()->GetSubsystem<UPersistentData_Instance_Subsystem>()
 	                                                  ->GetGameData()->m_SnakeSegment;
+	objectsIncluded.AddObjectTypesToQuery(ECC_Pawn);
+	objectsIncluded.AddObjectTypesToQuery(ECC_WorldStatic);
+	objectsIncluded.AddObjectTypesToQuery(ECC_WorldDynamic);
 }
 
 void APlayerPawnBase::SubscribeToEvents()
@@ -76,11 +82,6 @@ void APlayerPawnBase::OnMove(const float& x, const float& y)
 	rotation.Yaw += x * m_turnSpeed;
 	rotation.Pitch += y * m_turnSpeed;
 	currentController->SetControlRotation(rotation);
-
-	FString controllerName = GetController()->GetActorNameOrLabel();
-	FString msg = FString::Printf(TEXT("%f, %f"), x, y);
-	GEngine->AddOnScreenDebugMessage(0, 5, FColor::Red, msg);
-	GEngine->AddOnScreenDebugMessage(1, 5, FColor::Red, controllerName);
 }
 
 void APlayerPawnBase::OnPlayerAteApple(APlayerPawnBase* PlayerWhoAteApple)
@@ -100,16 +101,9 @@ void APlayerPawnBase::CheckIfSnakeIsColliding()
 	FVector traceStart = GetActorLocation() + GetActorForwardVector() * GetActorScale().Length() * m_traceStartOffset;
 	FVector traceEnd = traceStart + GetActorForwardVector() * m_traceLength;
 
-	objectsIncluded.AddObjectTypesToQuery(ECC_Pawn);
-	objectsIncluded.AddObjectTypesToQuery(ECC_WorldStatic);
-	objectsIncluded.AddObjectTypesToQuery(ECC_WorldDynamic);
-
 	if (GetWorld()->LineTraceSingleByObjectType(snakeHeadCollisionHitResult, traceStart, traceEnd, objectsIncluded,
 	                                            queryParams))
 	{
-		GEngine->AddOnScreenDebugMessage(2, 5, FColor::Red,
-		                                 FString::Printf(
-			                                 TEXT("HIT %s"), *snakeHeadCollisionHitResult.GetActor()->GetName()));
 
 		Cast<USnakeGameInstance>(GetGameInstance())->GetSubsystem<UStateMachineSubsystem>()->SwitchState_Implementation(UEndState::StaticClass(),
 			GetWorld());

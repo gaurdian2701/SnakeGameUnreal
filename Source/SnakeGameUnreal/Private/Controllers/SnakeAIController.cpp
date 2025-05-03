@@ -22,13 +22,18 @@ void ASnakeAIController::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	UnsubscribeFromEvents();
 }
 
+void ASnakeAIController::DoOverriddenControllingMovement(FRotator UpdatedPawnRotation)
+{
+	m_targetPawnRotation = UpdatedPawnRotation;
+	m_snakePawn->SetActorRotation(m_targetPawnRotation);
+}
+
 void ASnakeAIController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	FRotator rotatorOfTargetVector = (m_nextAppleLocation - m_snakePawn->GetActorLocation()).Rotation();
-	FRotator snakeRotation = m_snakePawn->GetActorRotation();
-	FRotator targetRotation = FMath::RInterpTo(snakeRotation, rotatorOfTargetVector, DeltaTime, m_snakePawn->GetTurnSpeed());
-	m_snakePawn->SetActorRotation(targetRotation);
+
+	if (!bControlOverridden)
+		DoDefaultPawnUpdate(DeltaTime);
 }
 
 void ASnakeAIController::GetNextAppleLocation()
@@ -50,6 +55,14 @@ void ASnakeAIController::UnsubscribeFromEvents()
 		this, m_appleEatenSubscriberName);
 	m_snakeGameState->UnsubscribeFromDelegate(m_snakeGameState->GetDelegateData()->GetOnPlayerDiedDelegate(),
 	this, m_playerDiedSubscriberName);
+}
+
+void ASnakeAIController::DoDefaultPawnUpdate(float DeltaTime)
+{
+	FRotator rotatorOfTargetVector = (m_nextAppleLocation - m_snakePawn->GetActorLocation()).Rotation();
+	FRotator snakeRotation = m_snakePawn->GetActorRotation();
+	m_targetPawnRotation = FMath::RInterpTo(snakeRotation, rotatorOfTargetVector, DeltaTime, m_snakePawn->GetTurnSpeed());
+	m_snakePawn->SetActorRotation(m_targetPawnRotation);
 }
 
 void ASnakeAIController::OnPlayerDied()

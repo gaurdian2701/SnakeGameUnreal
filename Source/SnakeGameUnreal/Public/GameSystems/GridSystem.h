@@ -16,6 +16,13 @@ struct FGridTile
 		YPosition = 0.0f;
 		bOccupied = false;
 	}
+
+	FGridTile(int X, int Y)
+	{
+		XPosition = X;
+		YPosition = Y;
+		bOccupied = false;
+	}
 	
 	float XPosition;
 	float YPosition;
@@ -44,9 +51,6 @@ private:
 
 	UPROPERTY()
 	TArray<FGridTile> m_gridTiles;
-
-	UPROPERTY()
-	TArray<FGridTile> m_unoccupiedGridTiles;
 	
 	UPROPERTY()
 	TMap<int, TObjectPtr<AActor>> m_spawnedActorsInScene;
